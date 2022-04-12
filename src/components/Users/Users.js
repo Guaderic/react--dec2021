@@ -1,15 +1,20 @@
 import {useEffect, useState} from 'react';
-import {usersService} from '../../services/users.service';
 
-export const Users = () => {
+
+import {usersService} from '../../services';
+import {User} from '../User/User'
+
+export const Users = ({setUser}) => {
     const [users, setUsers] = useState([]);
-    useEffect(()=>{
-        usersService.getAll().then(({data})=>(setUsers(data)))
+    useEffect(() => {
+        usersService.getAll().then(({data}) => (setUsers(data)))
     }, [])
-    console.log(users)
+
     return (
         <div>
-
+            {users.map((user) => <User key={user.id}
+                                       user={user}
+                                       setUser={setUser}/>)}
         </div>
     );
 };
